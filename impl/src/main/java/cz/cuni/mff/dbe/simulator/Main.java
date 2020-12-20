@@ -9,6 +9,10 @@ import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.loadsimulator.NoLoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.StableNodeCountSimulator;
+import cz.cuni.mff.dbe.util.metrics.CsvMetricsRecorder;
+import cz.cuni.mff.dbe.util.metrics.Metrics;
+
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +23,10 @@ public class Main {
         DataSimulator dataSimulator = new RandomIncrementalDataSimulator();
         LoadSimulator loadSimulator = new NoLoadSimulator();
         NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
+
+        Metrics.setMetricsRecorder(
+                new CsvMetricsRecorder(System.getProperty("user.dir") + File.separator + "metrics")
+        );
 
         Simulator simulator = new Simulator(
                 new DataBalancer(dataBalancingAlgorithm),

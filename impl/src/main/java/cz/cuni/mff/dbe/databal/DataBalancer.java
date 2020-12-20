@@ -8,7 +8,7 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
-import cz.cuni.mff.dbe.util.Metrics;
+import cz.cuni.mff.dbe.util.metrics.Metrics;
 
 import java.util.List;
 
