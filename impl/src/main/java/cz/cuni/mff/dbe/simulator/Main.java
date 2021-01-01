@@ -9,8 +9,10 @@ import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.loadsimulator.NoLoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.StableNodeCountSimulator;
+import cz.cuni.mff.dbe.util.metrics.ConsoleMetricsRecorder;
 import cz.cuni.mff.dbe.util.metrics.CsvMetricsRecorder;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
+import cz.cuni.mff.dbe.util.metrics.NoMetricsRecorder;
 
 import java.io.File;
 
@@ -25,7 +27,9 @@ public class Main {
         NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
 
         Metrics.setMetricsRecorder(
-                new CsvMetricsRecorder(System.getProperty("user.dir") + File.separator + "metrics")
+                //new NoMetricsRecorder()
+                new ConsoleMetricsRecorder()
+                //new CsvMetricsRecorder(System.getProperty("user.dir") + File.separator + "metrics")
         );
 
         Simulator simulator = new Simulator(

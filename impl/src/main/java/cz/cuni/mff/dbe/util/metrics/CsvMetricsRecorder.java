@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 
 /**
- * Writes metrics record in a CSV formatted file named as the metric.
+ * {@link MetricsRecorder} that writes metrics record in a CSV formatted file named as the metric.
  */
 public final class CsvMetricsRecorder implements MetricsRecorder {
     /**
