@@ -11,6 +11,6 @@ import java.util.HashMap;
 public final class NoLoadSimulator implements LoadSimulator {
     @Override
     public LoadDistributionChange nextLoadDistribution(LoadDistribution loadDistribution) {
-        return new LoadDistributionChange(new HashMap<>());
+        return new LoadDistributionChange();
     }
 }

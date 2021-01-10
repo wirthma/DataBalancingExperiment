@@ -2,6 +2,7 @@ package cz.cuni.mff.dbe.simulator;
 
 import cz.cuni.mff.dbe.algorithm.DataBalancingAlgorithm;
 import cz.cuni.mff.dbe.algorithm.DummyDataBalancingAlgorithm;
+import cz.cuni.mff.dbe.algorithm.RandomDataBalancingAlgorithm;
 import cz.cuni.mff.dbe.databal.DataBalancer;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.datasimulator.RandomIncrementalDataSimulator;
@@ -19,10 +20,10 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
         // collection of params
-        int initNodeCount = 2;
-        int iterationCount = 2;
-        DataBalancingAlgorithm dataBalancingAlgorithm = new DummyDataBalancingAlgorithm();
-        DataSimulator dataSimulator = new RandomIncrementalDataSimulator();
+        int initNodeCount = 3;
+        int iterationCount = 5;
+        DataBalancingAlgorithm dataBalancingAlgorithm = new RandomDataBalancingAlgorithm(1, 42);
+        DataSimulator dataSimulator = new RandomIncrementalDataSimulator(42);
         LoadSimulator loadSimulator = new NoLoadSimulator();
         NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
 

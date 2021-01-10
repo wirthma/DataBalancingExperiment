@@ -1,5 +1,7 @@
 package cz.cuni.mff.dbe.model;
 
+import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
+
 import java.util.*;
 
 /**
@@ -14,18 +16,16 @@ public final class DataDistribution {
     }
 
     public void update(DataDistributionChange dataDistributionChange) {
-        dataDistributionChange.getCreatedItems().forEach(
-                (Node node, List<DataItem> dataItems) -> {
-                    if (!nodeToDataMap.containsKey(node)) {
-                        nodeToDataMap.put(node, new ArrayList<>());
-                    }
-
-                    nodeToDataMap.get(node).addAll(dataItems);
+        dataDistributionChange.getRemovedItems().forEach(
+                (Node node, List<DataItem> items) -> {
+                    DataDistributionUtils.removeFromMap(node, items, nodeToDataMap);
                 }
         );
 
-        dataDistributionChange.getRemovedItems().forEach(
-                (Node node, List<DataItem> dataItems) -> nodeToDataMap.get(node).removeAll(dataItems)
+        dataDistributionChange.getCreatedItems().forEach(
+                (Node node, List<DataItem> items) -> {
+                    DataDistributionUtils.addToMap(node, items, nodeToDataMap);
+                }
         );
     }
 

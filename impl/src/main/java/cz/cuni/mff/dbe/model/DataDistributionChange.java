@@ -1,5 +1,6 @@
 package cz.cuni.mff.dbe.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,14 @@ import java.util.Map;
  * Defines a change in data distribution on system nodes.
  */
 public final class DataDistributionChange {
+    /**
+     * Creates an empty {@link DataDistributionChange} representing "no action".
+     */
+    public DataDistributionChange() {
+        createdItems = new HashMap<>();
+        removedItems = new HashMap<>();
+    }
+
     /**
      * @param createdItems All items to be created on given system nodes.
      * @param removedItems All items to be removed from given system nodes.

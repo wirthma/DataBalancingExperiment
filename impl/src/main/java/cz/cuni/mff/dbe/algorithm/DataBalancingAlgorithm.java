@@ -20,7 +20,8 @@ public interface DataBalancingAlgorithm {
      * Runs a single iteration of normal operation.
      *
      * @param model The data balancer's model of the system when calling this method. It will not be modified.
+     * @param iterationNumber Number of the current iteration.
      * @return Changes to be done in the data distribution in the system.
      */
-    DataDistributionChange runIteration(Model model);
+    DataDistributionChange runIteration(int iterationNumber, Model model);
 }

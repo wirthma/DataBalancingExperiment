@@ -1,0 +1,48 @@
+package cz.cuni.mff.dbe.util.datadistribution;
+
+import cz.cuni.mff.dbe.model.DataItem;
+import cz.cuni.mff.dbe.model.Node;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Provides common operations related to data distribution.
+ */
+public final class DataDistributionUtils {
+    /**
+     * Inserts the given data items to the mapping for the given node inside the given map, correctly handling
+     * situations like already existing data item list for that node in the given map, etc.
+     */
+    public static void addToMap(Node node, List<DataItem> items, Map<Node, List<DataItem>> map) {
+        List<DataItem> mapItems = map.get(node);
+        if (mapItems == null) {
+            map.put(node, items);
+        } else {
+            mapItems.addAll(items);
+        }
+    }
+
+    /**
+     * Inserts the given data item to the mapping for the given node inside the given map, correctly handling situations
+     * like already existing data item list for that node in the given map, etc.
+     */
+    public static void addToMap(Node node, DataItem item, Map<Node, List<DataItem>> map) {
+        List<DataItem> list = new ArrayList<>();
+        list.add(item);
+
+        addToMap(node, list, map);
+    }
+
+    /**
+     * Removes the given data items from the mapping for the given node inside the given map, correctly handling
+     * situations like no existing data item list for that node in the given map, etc.
+     */
+    public static void removeFromMap(Node node, List<DataItem> items, Map<Node, List<DataItem>> map) {
+        List<DataItem> mapItems = map.get(node);
+        if (mapItems != null) {
+            mapItems.removeAll(items);
+        }
+    }
+}
