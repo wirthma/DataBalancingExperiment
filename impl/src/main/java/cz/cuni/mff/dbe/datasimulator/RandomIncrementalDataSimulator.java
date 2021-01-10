@@ -11,8 +11,11 @@ import java.util.*;
  * A {@link DataSimulator} that adds one data item at a time into random node in the system.
  */
 public final class RandomIncrementalDataSimulator implements DataSimulator {
-    public  RandomIncrementalDataSimulator() {
-        random = new Random(42);
+    /**
+     * @param seed The seed for the pseudo-random generator.
+     */
+    public  RandomIncrementalDataSimulator(int seed) {
+        random = new Random(seed);
     }
 
     @Override

@@ -11,6 +11,7 @@ import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Simulates the data balancer as a whole.
@@ -31,13 +32,15 @@ public final class DataBalancer {
 
     /**
      * Simulates one iteration of the data balancing algorithm.
+     *
+     * @param iterationNumber The number of the current iteration.
      */
-    public void simulateIteration() {
-        DataDistributionChange dataDistributionChange = dataBalancingAlgorithm.runIteration(model);
+    public void simulateIteration(int iterationNumber) {
+        DataDistributionChange dataDistributionChange = dataBalancingAlgorithm.runIteration(iterationNumber, model);
 
         model.updateDataDistribution(dataDistributionChange);
 
-        collectMetrics();
+        collectMetrics(iterationNumber);
     }
 
     /**
@@ -63,10 +66,13 @@ public final class DataBalancer {
 
     /**
      * Collects metrics after an iteration.
+     *
+     * @param iterationNumber The number of the current iteration.
      */
-    private void collectMetrics() {
+    private void collectMetrics(int iterationNumber) {
         model.getDataDistribution().getNodeToDataMap().forEach(
                 (Node node, List <DataItem> dataItems) -> Metrics.record(
+                        iterationNumber,
                         "model.datadistribution.node" + node.getId() + ".size",
                         dataItems.size()
                 )
