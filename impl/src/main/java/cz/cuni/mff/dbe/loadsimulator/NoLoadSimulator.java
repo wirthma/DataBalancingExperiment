@@ -1,7 +1,9 @@
 package cz.cuni.mff.dbe.loadsimulator;
 
+import cz.cuni.mff.dbe.model.DataDistribution;
 import cz.cuni.mff.dbe.model.LoadDistribution;
 import cz.cuni.mff.dbe.model.LoadDistributionChange;
+import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
 
 import java.util.HashMap;
 
@@ -10,7 +12,13 @@ import java.util.HashMap;
  */
 public final class NoLoadSimulator implements LoadSimulator {
     @Override
-    public LoadDistributionChange nextLoadDistribution(LoadDistribution loadDistribution) {
+    public LoadDistributionChange nextLoadDistribution(
+            int iterationNumber,
+            LoadDistribution loadDistribution,
+            DataDistribution dataDistribution
+    ) {
+        DataDistributionUtils.collectNodeSize(dataDistribution, iterationNumber, "noloadsimulator");
+
         return new LoadDistributionChange();
     }
 }

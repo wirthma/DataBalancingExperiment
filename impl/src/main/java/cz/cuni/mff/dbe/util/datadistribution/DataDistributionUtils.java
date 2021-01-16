@@ -1,7 +1,9 @@
 package cz.cuni.mff.dbe.util.datadistribution;
 
+import cz.cuni.mff.dbe.model.DataDistribution;
 import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Node;
+import cz.cuni.mff.dbe.util.metrics.Metrics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +46,22 @@ public final class DataDistributionUtils {
         if (mapItems != null) {
             mapItems.removeAll(items);
         }
+    }
+
+    /**
+     * Collects number of data items at individual nodes as metrics.
+     *
+     * @param dataDistribution The data distribution used.
+     * @param iterationNumber The number of the current iteration.
+     * @param prefix Prefix used for the metrics name.
+     */
+    public static void collectNodeSize(DataDistribution dataDistribution, int iterationNumber, String prefix) {
+        dataDistribution.getNodeToDataMap().forEach(
+                (Node node, List <DataItem> dataItems) -> Metrics.record(
+                        iterationNumber,
+                        prefix + ".node" + node.getId() + ".size",
+                        dataItems.size()
+                )
+        );
     }
 }

@@ -33,10 +33,10 @@ public final class Simulator {
      * changes.
      */
     public void simulateIteration() {
-        dataBalancer.updateNodeCount(nodeCountSimulator);
-        dataBalancer.updateDataDistribution(dataSimulator);
+        dataBalancer.updateNodeCount(nodeCountSimulator, iterationNumber);
+        dataBalancer.updateDataDistribution(dataSimulator, iterationNumber);
         dataBalancer.simulateIteration(iterationNumber);
-        dataBalancer.updateLoadDistribution(loadSimulator);
+        dataBalancer.updateLoadDistribution(loadSimulator, iterationNumber);
 
         ++iterationNumber;
     }

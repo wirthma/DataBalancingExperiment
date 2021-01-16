@@ -19,7 +19,11 @@ public final class RandomIncrementalDataSimulator implements DataSimulator {
     }
 
     @Override
-    public DataDistributionChange nextDataDistribution(DataDistribution dataDistribution, int nodeCount) {
+    public DataDistributionChange nextDataDistribution(
+            int iterationNumber,
+            DataDistribution dataDistribution,
+            int nodeCount
+    ) {
         return createDataDistributionChange(nodeCount);
     }
 

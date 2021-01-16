@@ -8,6 +8,7 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
 
 import java.util.List;
@@ -40,43 +41,38 @@ public final class DataBalancer {
 
         model.updateDataDistribution(dataDistributionChange);
 
-        collectMetrics(iterationNumber);
+        DataDistributionUtils.collectNodeSize(
+                model.getDataDistribution(),
+                iterationNumber,
+                "model.datadistribution"
+        );
     }
 
     /**
      * Updates the information about load distribution in the model of the data balancer.
+     *
+     * @param iterationNumber Number of the current iteration.
      */
-    public void updateLoadDistribution(LoadSimulator loadSimulator) {
-        model.updateLoadDistribution(loadSimulator);
+    public void updateLoadDistribution(LoadSimulator loadSimulator, int iterationNumber) {
+        model.updateLoadDistribution(loadSimulator, iterationNumber);
     }
 
     /**
      * Updates the information about data distribution in the model of the data balancer.
+     *
+     * @param iterationNumber Number of the current iteration.
      */
-    public void updateDataDistribution(DataSimulator dataSimulator) {
-        model.updateDataDistribution(dataSimulator);
+    public void updateDataDistribution(DataSimulator dataSimulator, int iterationNumber) {
+        model.updateDataDistribution(dataSimulator, iterationNumber);
     }
 
     /**
      * Updates the information about the node count in the model of the data balancer.
-     */
-    public void updateNodeCount(NodeCountSimulator nodeCountSimulator) {
-        model.updateNodeCount(nodeCountSimulator);
-    }
-
-    /**
-     * Collects metrics after an iteration.
      *
-     * @param iterationNumber The number of the current iteration.
+     * @param iterationNumber Number of the current iteration.
      */
-    private void collectMetrics(int iterationNumber) {
-        model.getDataDistribution().getNodeToDataMap().forEach(
-                (Node node, List <DataItem> dataItems) -> Metrics.record(
-                        iterationNumber,
-                        "model.datadistribution.node" + node.getId() + ".size",
-                        dataItems.size()
-                )
-        );
+    public void updateNodeCount(NodeCountSimulator nodeCountSimulator, int iterationNumber) {
+        model.updateNodeCount(iterationNumber, nodeCountSimulator);
     }
 
     /**
