@@ -17,8 +17,6 @@ public final class NoLoadSimulator implements LoadSimulator {
             LoadDistribution loadDistribution,
             DataDistribution dataDistribution
     ) {
-        DataDistributionUtils.collectNodeSize(dataDistribution, iterationNumber, "noloadsimulator");
-
         return new LoadDistributionChange();
     }
 }
