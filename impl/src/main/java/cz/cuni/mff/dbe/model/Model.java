@@ -15,8 +15,15 @@ public final class Model {
         return dataDistribution;
     }
 
-    public void updateDataDistribution(DataSimulator dataSimulator) {
-        DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(dataDistribution, nodeCount);
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateDataDistribution(DataSimulator dataSimulator, int iterationNumber) {
+        DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(
+                iterationNumber,
+                dataDistribution,
+                nodeCount
+        );
 
         dataDistribution.update(dataDistributionChange);
     }
@@ -32,8 +39,15 @@ public final class Model {
         return loadDistribution;
     }
 
-    public void updateLoadDistribution(LoadSimulator loadSimulator) {
-        LoadDistributionChange loadDistributionChange = loadSimulator.nextLoadDistribution(loadDistribution);
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateLoadDistribution(LoadSimulator loadSimulator, int iterationNumber) {
+        LoadDistributionChange loadDistributionChange = loadSimulator.nextLoadDistribution(
+                iterationNumber,
+                loadDistribution,
+                dataDistribution
+        );
 
         loadDistribution.update(loadDistributionChange);
     }
@@ -46,8 +60,11 @@ public final class Model {
         return nodeCount;
     }
 
-    public void updateNodeCount(NodeCountSimulator nodeCountSimulator) {
-        int newNodeCount = nodeCountSimulator.nextNodeCount(nodeCount);
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateNodeCount(int iterationNumber, NodeCountSimulator nodeCountSimulator) {
+        int newNodeCount = nodeCountSimulator.nextNodeCount(iterationNumber, nodeCount);
 
         nodeCount = newNodeCount;
     }

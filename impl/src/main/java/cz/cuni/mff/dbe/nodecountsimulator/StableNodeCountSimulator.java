@@ -9,7 +9,7 @@ public final class StableNodeCountSimulator implements NodeCountSimulator {
     }
 
     @Override
-    public int nextNodeCount(int nodeCount) {
+    public int nextNodeCount(int iterationNumber, int nodeCount) {
         return this.nodeCount;
     }
 
