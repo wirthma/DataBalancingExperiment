@@ -6,6 +6,7 @@ import cz.cuni.mff.dbe.algorithm.RandomDataBalancingAlgorithm;
 import cz.cuni.mff.dbe.databal.DataBalancer;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.datasimulator.RandomIncrementalDataSimulator;
+import cz.cuni.mff.dbe.datasimulator.StableDataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.loadsimulator.NoLoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
@@ -23,7 +24,7 @@ public class Main {
         int initNodeCount = 3;
         int iterationCount = 5;
         DataBalancingAlgorithm dataBalancingAlgorithm = new RandomDataBalancingAlgorithm(1, 42);
-        DataSimulator dataSimulator = new RandomIncrementalDataSimulator(42);
+        DataSimulator dataSimulator = new StableDataSimulator(3);
         LoadSimulator loadSimulator = new NoLoadSimulator();
         NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
 

@@ -4,7 +4,8 @@ import cz.cuni.mff.dbe.model.DataDistributionChange;
 import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
-import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.node.NodeGen;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
             DataDistributionUtils.addToMap(oldNode, items, removedItems);
 
             for (DataItem item : items) {
-                Node newNode = new Node(random.nextInt(model.getNodeCount()));
+                Node newNode = NodeGen.getNth(random.nextInt(model.getNodeCount()));
                 DataDistributionUtils.addToMap(newNode, item, createdItems);
             }
         }

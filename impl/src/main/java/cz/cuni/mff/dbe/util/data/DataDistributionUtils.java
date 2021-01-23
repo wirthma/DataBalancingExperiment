@@ -1,4 +1,4 @@
-package cz.cuni.mff.dbe.util.datadistribution;
+package cz.cuni.mff.dbe.util.data;
 
 import cz.cuni.mff.dbe.model.DataDistribution;
 import cz.cuni.mff.dbe.model.DataItem;

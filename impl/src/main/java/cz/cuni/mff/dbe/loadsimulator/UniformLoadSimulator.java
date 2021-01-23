@@ -1,7 +1,7 @@
 package cz.cuni.mff.dbe.loadsimulator;
 
 import cz.cuni.mff.dbe.model.*;
-import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 
 import java.util.HashMap;
 import java.util.List;

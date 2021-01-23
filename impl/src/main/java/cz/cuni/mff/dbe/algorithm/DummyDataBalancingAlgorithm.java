@@ -4,7 +4,8 @@ import cz.cuni.mff.dbe.model.DataDistributionChange;
 import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
-import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.node.NodeGen;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public final class DummyDataBalancingAlgorithm implements DataBalancingAlgorithm
         Map<Node, List<DataItem>> createdItems = new HashMap<>();
         Map<Node, List<DataItem>> removedItems = new HashMap<>();
 
-        Node node0 = new Node(0);
+        Node node0 = NodeGen.getNth(0);
 
         for (Map.Entry<Node, List<DataItem>> nodeItems : model.getDataDistribution().getNodeToDataMap().entrySet()) {
             Node node = nodeItems.getKey();
