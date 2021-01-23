@@ -64,9 +64,7 @@ public final class Model {
      * @param iterationNumber Number of the current iteration.
      */
     public void updateNodeCount(int iterationNumber, NodeCountSimulator nodeCountSimulator) {
-        int newNodeCount = nodeCountSimulator.nextNodeCount(iterationNumber, nodeCount);
-
-        nodeCount = newNodeCount;
+        nodeCount = nodeCountSimulator.nextNodeCount(iterationNumber, nodeCount, dataDistribution);
     }
 
     public void updateNodeCount(int nodeCount) {

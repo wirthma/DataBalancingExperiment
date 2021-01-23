@@ -4,15 +4,9 @@ import cz.cuni.mff.dbe.algorithm.DataBalancingAlgorithm;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.model.DataDistributionChange;
-import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
-import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
-import cz.cuni.mff.dbe.util.datadistribution.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.metrics.Metrics;
-
-import java.util.List;
-import java.util.Map;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 
 /**
  * Simulates the data balancer as a whole.
