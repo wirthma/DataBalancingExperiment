@@ -1,22 +1,18 @@
 package cz.cuni.mff.dbe.simulator;
 
 import cz.cuni.mff.dbe.algorithm.DataBalancingAlgorithm;
-import cz.cuni.mff.dbe.algorithm.DummyDataBalancingAlgorithm;
 import cz.cuni.mff.dbe.algorithm.RandomDataBalancingAlgorithm;
 import cz.cuni.mff.dbe.databal.DataBalancer;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
-import cz.cuni.mff.dbe.datasimulator.RandomIncrementalDataSimulator;
 import cz.cuni.mff.dbe.datasimulator.StableDataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
-import cz.cuni.mff.dbe.loadsimulator.NoLoadSimulator;
+import cz.cuni.mff.dbe.loadsimulator.UniformLoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.StableNodeCountSimulator;
 import cz.cuni.mff.dbe.util.metrics.ConsoleMetricsRecorder;
 import cz.cuni.mff.dbe.util.metrics.CsvMetricsRecorder;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
 import cz.cuni.mff.dbe.util.metrics.NoMetricsRecorder;
-
-import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +21,7 @@ public class Main {
         int iterationCount = 5;
         DataBalancingAlgorithm dataBalancingAlgorithm = new RandomDataBalancingAlgorithm(1, 42);
         DataSimulator dataSimulator = new StableDataSimulator(3);
-        LoadSimulator loadSimulator = new NoLoadSimulator();
+        LoadSimulator loadSimulator = new UniformLoadSimulator();
         NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
 
         Metrics.setMetricsRecorder(

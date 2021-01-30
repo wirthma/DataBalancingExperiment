@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * A {@link DataBalancingAlgorithm} that always redistributes all data items to node 0.
  */
-public final class DummyDataBalancingAlgorithm implements DataBalancingAlgorithm {
+public final class OneNodeDataBalancingAlgorithm implements DataBalancingAlgorithm {
     @Override
     public DataDistributionChange runInit(Model model) {
         return runRebalancing(model);
