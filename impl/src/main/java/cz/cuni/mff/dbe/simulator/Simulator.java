@@ -4,23 +4,14 @@ import cz.cuni.mff.dbe.databal.DataBalancer;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Simulates execution of a given data balancer over a model of a distributed system.
  */
+@Component
 public final class Simulator {
-    public Simulator(
-            DataBalancer dataBalancer,
-            DataSimulator dataSimulator,
-            LoadSimulator loadSimulator,
-            NodeCountSimulator nodeCountSimulator
-    ) {
-        this.dataBalancer = dataBalancer;
-        this.dataSimulator = dataSimulator;
-        this.loadSimulator = loadSimulator;
-        this.nodeCountSimulator = nodeCountSimulator;
-    }
-
     /**
      * Executes initialization of data balancing.
      */
@@ -41,13 +32,17 @@ public final class Simulator {
         ++iterationNumber;
     }
 
-    private final DataBalancer dataBalancer;
+    @Autowired
+    private DataBalancer dataBalancer;
 
-    private final DataSimulator dataSimulator;
+    @Autowired
+    private DataSimulator dataSimulator;
 
-    private final LoadSimulator loadSimulator;
+    @Autowired
+    private LoadSimulator loadSimulator;
 
-    private final NodeCountSimulator nodeCountSimulator;
+    @Autowired
+    private NodeCountSimulator nodeCountSimulator;
 
     /**
      * Number of the current iteration.
