@@ -6,6 +6,9 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.data.DataItemGen;
 import cz.cuni.mff.dbe.util.node.NodeGen;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +18,12 @@ import java.util.Map;
  * A {@link DataSimulator} that adds the given number of data items into the system's first node and then does not
  * change the data anymore.
  */
+@Component
+@ConditionalOnProperty(name = "datasimulator", havingValue = "stable")
 public final class StableDataSimulator implements DataSimulator {
-    public StableDataSimulator(int dataItemCount) {
+    public StableDataSimulator(
+            @Value("${datasimulator.stable.dataitemcount}") int dataItemCount
+    ) {
         this.dataItemCount = dataItemCount;
         areDataItemsAdded = false;
     }

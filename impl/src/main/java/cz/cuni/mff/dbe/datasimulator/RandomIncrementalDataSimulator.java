@@ -6,6 +6,9 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.data.DataItemGen;
 import cz.cuni.mff.dbe.util.node.NodeGen;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +18,15 @@ import java.util.Random;
 /**
  * A {@link DataSimulator} that adds one data item at a time into random node in the system.
  */
+@Component
+@ConditionalOnProperty(name = "datasimulator", havingValue = "randomincremental")
 public final class RandomIncrementalDataSimulator implements DataSimulator {
     /**
      * @param seed The seed for the pseudo-random generator.
      */
-    public  RandomIncrementalDataSimulator(int seed) {
+    public RandomIncrementalDataSimulator(
+            @Value("${datasimulator.randomincremental.seed}") int seed
+    ) {
         random = new Random(seed);
     }
 

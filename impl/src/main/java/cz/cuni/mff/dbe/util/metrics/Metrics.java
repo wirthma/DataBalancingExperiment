@@ -1,8 +1,5 @@
 package cz.cuni.mff.dbe.util.metrics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Helps to collect metrics.
  */

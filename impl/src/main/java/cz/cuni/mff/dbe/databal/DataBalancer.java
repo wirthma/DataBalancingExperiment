@@ -7,12 +7,15 @@ import cz.cuni.mff.dbe.model.DataDistributionChange;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Simulates the data balancer as a whole.
  */
+@Component
 public final class DataBalancer {
-    public DataBalancer(DataBalancingAlgorithm dataBalancingAlgorithm) {
+    public DataBalancer(@Autowired DataBalancingAlgorithm dataBalancingAlgorithm) {
         this.dataBalancingAlgorithm = dataBalancingAlgorithm;
     }
 
