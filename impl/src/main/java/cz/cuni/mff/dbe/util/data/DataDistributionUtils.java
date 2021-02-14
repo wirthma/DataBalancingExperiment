@@ -64,4 +64,14 @@ public final class DataDistributionUtils {
                 )
         );
     }
+
+    public static int countAllDataItems(DataDistribution dataDistribution) {
+        int count = 0;
+
+        for (Map.Entry<Node, List<DataItem>> e : dataDistribution.getNodeToDataMap().entrySet()) {
+            count += e.getValue().size();
+        }
+
+        return count;
+    }
 }
