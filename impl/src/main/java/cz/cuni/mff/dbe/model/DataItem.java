@@ -12,6 +12,10 @@ public final class DataItem {
         this.timestamp = timestamp;
     }
 
+    public int getId() {
+        return id;
+    }
+
     /**
      * Returns the time point when the data item was created.
      */
