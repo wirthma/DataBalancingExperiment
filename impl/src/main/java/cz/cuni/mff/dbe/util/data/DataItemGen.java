@@ -12,7 +12,10 @@ import java.util.List;
  */
 public final class DataItemGen {
     public static DataItem generateOne() {
-        return new DataItem(nextDataItemId++);
+        int id = nextDataItemId;
+        int timestamp = id;
+        nextDataItemId++;
+        return new DataItem(id, timestamp);
     }
 
     public static List<DataItem> generateList(int number) {
