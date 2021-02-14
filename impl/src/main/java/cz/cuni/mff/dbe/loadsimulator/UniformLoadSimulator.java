@@ -27,7 +27,7 @@ public final class UniformLoadSimulator implements LoadSimulator {
                 (Map.Entry<Node, List<DataItem>> entry) -> entry.getValue().stream()
         ).forEach(
                 (DataItem dataItem) -> {
-                    if (loadDistribution.getItemToLoadMap().containsKey(dataItem)) {
+                    if (!loadDistribution.getItemToLoadMap().containsKey(dataItem)) {
                         changedLoad.put(dataItem, 1);
                     }
                 }
@@ -35,6 +35,6 @@ public final class UniformLoadSimulator implements LoadSimulator {
 
         DataDistributionUtils.collectNodeSize(dataDistribution, iterationNumber, "loadsimulator");
 
-        return new LoadDistributionChange();
+        return new LoadDistributionChange(changedLoad);
     }
 }
