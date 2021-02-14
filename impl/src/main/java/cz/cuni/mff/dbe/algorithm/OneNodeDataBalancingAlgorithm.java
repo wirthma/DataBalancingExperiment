@@ -7,8 +7,6 @@ import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 import cz.cuni.mff.dbe.util.node.NodeGen;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -41,8 +39,10 @@ public final class OneNodeDataBalancingAlgorithm implements DataBalancingAlgorit
             Node node = nodeItems.getKey();
             List<DataItem> items = nodeItems.getValue();
 
-            DataDistributionUtils.addToMap(node0, items, createdItems);
-            DataDistributionUtils.addToMap(node, items, removedItems);
+            if (!node.equals(node0)) {
+                DataDistributionUtils.addToMap(node0, items, createdItems);
+                DataDistributionUtils.addToMap(node, items, removedItems);
+            }
         }
 
         return new DataDistributionChange(createdItems, removedItems);
