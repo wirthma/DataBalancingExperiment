@@ -59,7 +59,7 @@ public final class DataDistributionUtils {
         dataDistribution.getNodeToDataMap().forEach(
                 (Node node, List <DataItem> dataItems) -> Metrics.record(
                         iterationNumber,
-                        prefix + ".node" + node.getId() + ".size",
+                        prefix + ".node" + node.getId(),
                         dataItems.size()
                 )
         );

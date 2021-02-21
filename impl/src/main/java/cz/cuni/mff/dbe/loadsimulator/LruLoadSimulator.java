@@ -51,7 +51,7 @@ public final class LruLoadSimulator implements LoadSimulator {
 
                     Metrics.record(
                             iterationNumber,
-                            "loadsimulator.node" + entry.getKey().getId() + ".size",
+                            "loadsimulator.node" + entry.getKey().getId(),
                             loadSum
                     );
                 }
