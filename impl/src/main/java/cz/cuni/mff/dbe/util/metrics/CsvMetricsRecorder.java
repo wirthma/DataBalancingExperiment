@@ -48,7 +48,7 @@ public final class CsvMetricsRecorder implements MetricsRecorder {
                         StandardOpenOption.APPEND
                 )
         ) {
-            writer.write(timestamp + ":" + value + System.lineSeparator());
+            writer.write(timestamp + "," + value + System.lineSeparator());
         } catch (IOException e) {
             Log.getLogger().log(
                     Level.SEVERE,
