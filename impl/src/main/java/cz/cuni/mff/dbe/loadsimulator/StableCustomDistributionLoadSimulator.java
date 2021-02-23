@@ -21,17 +21,17 @@ import java.util.*;
  * cardinalities of the load values in the array respect the defined distribution.
  */
 @Component
-@ConditionalOnProperty(name = "loadsimulator", havingValue = "stabledistribution")
-public final class StableDistributionLoadSimulator implements LoadSimulator {
+@ConditionalOnProperty(name = "loadsimulator", havingValue = "stablecustomdistribution")
+public final class StableCustomDistributionLoadSimulator implements LoadSimulator {
     /**
      * @param distributionStr String definition of the load distribution. The format is a comma separated list of
      *                        "load:volume" pairs. For example, "1000:50,2000:50" defines a fifty-fifty distribution
      *                        between load values 1000 and 2000.
      * @param seed The seed for the pseudo-random generator.
      */
-    public StableDistributionLoadSimulator(
-            @Value("${loadsimulator.stabledistribution.distribution}") String distributionStr,
-            @Value("${loadsimulator.stabledistribution.seed}") int seed
+    public StableCustomDistributionLoadSimulator(
+            @Value("${loadsimulator.stablecustomdistribution.distribution}") String distributionStr,
+            @Value("${loadsimulator.stablecustomdistribution.seed}") int seed
     ) throws ParsingException {
         init(String2Map.parseIntPairMap(distributionStr), seed);
     }
