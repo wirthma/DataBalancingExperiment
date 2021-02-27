@@ -20,6 +20,7 @@ gnuplot_script="
 
 if [ $# -ne 1 ]; then
     echo "Bad params: $0 {data dir path}"
+    exit
 fi
 data_dir="$1"
 

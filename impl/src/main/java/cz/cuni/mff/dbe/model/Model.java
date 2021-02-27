@@ -3,6 +3,7 @@ package cz.cuni.mff.dbe.model;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 
 /**
  * Captures the data and load distribution in the system, as a model for the data balancer.

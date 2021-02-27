@@ -34,15 +34,17 @@ public final class DataBalancer {
      * @param iterationNumber The number of the current iteration.
      */
     public void simulateIteration(int iterationNumber) {
-        DataDistributionChange dataDistributionChange = dataBalancingAlgorithm.runIteration(iterationNumber, model);
-
-        model.updateDataDistribution(dataDistributionChange);
-
-        DataDistributionUtils.collectNodeSize(
+        DataDistributionUtils.collectNodeSizeMetrics(
                 model.getDataDistribution(),
                 iterationNumber,
-                "model.datadistribution"
+                "datadistribution"
         );
+
+        DataDistributionChange dataDistributionChange = dataBalancingAlgorithm.runIteration(iterationNumber, model);
+
+        DataDistributionUtils.collectChurnMetrics(dataDistributionChange, iterationNumber, "dataitemchurn");
+
+        model.updateDataDistribution(dataDistributionChange);
     }
 
     /**
