@@ -1,6 +1,7 @@
 package cz.cuni.mff.dbe.util.data;
 
 import cz.cuni.mff.dbe.model.DataDistribution;
+import cz.cuni.mff.dbe.model.DataDistributionChange;
 import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
@@ -55,7 +56,7 @@ public final class DataDistributionUtils {
      * @param iterationNumber The number of the current iteration.
      * @param prefix Prefix used for the metrics name.
      */
-    public static void collectNodeSize(DataDistribution dataDistribution, int iterationNumber, String prefix) {
+    public static void collectNodeSizeMetrics(DataDistribution dataDistribution, int iterationNumber, String prefix) {
         dataDistribution.getNodeToDataMap().forEach(
                 (Node node, List <DataItem> dataItems) -> Metrics.record(
                         iterationNumber,
@@ -73,5 +74,27 @@ public final class DataDistributionUtils {
         }
 
         return count;
+    }
+
+    /**
+     * Collects created and removed data items in the given {@link DataDistributionChange} as metrics.
+     *
+     * @param iterationNumber The number of the current iteration.
+     * @param prefix Prefix used for the metrics name.
+     */
+    public static void collectChurnMetrics(
+            DataDistributionChange dataDistributionChange,
+            int iterationNumber,
+            String prefix
+    ) {
+        long createdDataItemsCount = dataDistributionChange.getCreatedItems().values().stream().flatMap(
+                (List<DataItem> dataItemList) -> dataItemList.stream()
+        ).count();
+        Metrics.record(iterationNumber, prefix + ".created", (int) createdDataItemsCount);
+
+        long removedDataItemsCount = dataDistributionChange.getRemovedItems().values().stream().flatMap(
+                (List<DataItem> dataItemList) -> dataItemList.stream()
+        ).count();
+        Metrics.record(iterationNumber, prefix + ".removed", (int) removedDataItemsCount);
     }
 }

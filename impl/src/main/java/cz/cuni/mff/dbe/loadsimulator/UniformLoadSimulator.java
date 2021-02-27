@@ -33,7 +33,7 @@ public final class UniformLoadSimulator implements LoadSimulator {
                 }
         );
 
-        DataDistributionUtils.collectNodeSize(dataDistribution, iterationNumber, "loadsimulator");
+        DataDistributionUtils.collectNodeSizeMetrics(dataDistribution, iterationNumber, "loadsimulator");
 
         return new LoadDistributionChange(changedLoad);
     }

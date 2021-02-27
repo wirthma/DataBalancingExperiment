@@ -3,18 +3,18 @@
 gnuplot_script="
     set datafile separator \",\"
 
-    set title \"Node Size Evolution\"
+    set title \"Data Item Churn\"
     set key outside
     set grid
     unset border
 
     set xlabel \"Iteration\"
     set xrange [1:*]
-    set ylabel \"Node Size [data items]\"
+    set ylabel \"Churn [data items]\"
     set yrange [0:*]
 
     set terminal pdf
-    set output 'node_size.pdf'
+    set output 'data_item_churn.pdf'
 
     plot"
 
@@ -24,10 +24,8 @@ if [ $# -ne 1 ]; then
 fi
 data_dir="$1"
 
-for loadDataFile in "$data_dir"/datadistribution.node*; do
-    title="node ${loadDataFile//[^0-9]/}"
-    gnuplot_script="$gnuplot_script '$loadDataFile' using 1:2 with lines title '$title', "
-done
+gnuplot_script="$gnuplot_script '$data_dir/dataitemchurn.created' using 1:2 with lines title 'Created', "
+gnuplot_script="$gnuplot_script '$data_dir/dataitemchurn.removed' using 1:2 with lines title 'Removed', "
 
 echo "Running the following gnuplot script:$gnuplot_script"
 
