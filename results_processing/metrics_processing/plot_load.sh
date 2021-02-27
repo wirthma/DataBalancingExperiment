@@ -1,6 +1,24 @@
 #!/bin/bash
 
-gnuplot_script="
+help="Bad params: $0 {data dir path} {pdf|png {width} {height}}"
+if [ "$2" != 'pdf' -o $# -ne 2 ] && [ "$2" != 'png' -o $# -ne 4 ]; then echo "$help"; exit; fi
+data_dir="$1"
+output_type="$2"
+
+if [ "$output_type" = 'pdf' ]; then
+    gnuplot_script="
+    set terminal pdf
+    set output 'load.pdf'"
+else
+    width="$3"
+    height="$4"
+    gnuplot_script="
+    set terminal png size $width,$height
+    set output 'load.png'"
+fi;
+
+gnuplot_script="$gnuplot_script
+
     set datafile separator \",\"
 
     set title \"Load Evolution\"
@@ -13,16 +31,7 @@ gnuplot_script="
     set ylabel \"Load [unit]\"
     set yrange [0:*]
 
-    set terminal pdf
-    set output 'load.pdf'
-
     plot"
-
-if [ $# -ne 1 ]; then
-    echo "Bad params: $0 {data dir path}"
-    exit
-fi
-data_dir="$1"
 
 for loadDataFile in "$data_dir"/loadsimulator.node*; do
     title="node ${loadDataFile//[^0-9]/}"
