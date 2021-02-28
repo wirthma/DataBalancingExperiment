@@ -15,7 +15,12 @@ function simulate {
     mv metrics "results/data/$3"
 }
 
-simulate foo bar baz
+rm -rf results
+
+simulate 'algorithm/onenode' 'workload/lru' "OneNode-Lru"
+simulate 'algorithm/random' 'workload/lru' "Random-Lru"
+simulate 'algorithm/roundrobin' 'workload/lru' "RoundRobin-Lru"
+simulate 'algorithm/uniform' 'workload/lru' "Uniform-Lru"
 
 cp -f results_processing/overview_generator/gen_md_overview.sh results
 cd results || exit
