@@ -14,7 +14,8 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @Configuration
 @ComponentScan("cz.cuni.mff.dbe")
-@PropertySource("classpath:${config}.properties")
+@PropertySource("classpath:${algorithm}.properties")
+@PropertySource("classpath:${workload}.properties")
 public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
