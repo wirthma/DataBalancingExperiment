@@ -28,6 +28,13 @@ public final class UniformDataBalancingAlgorithm implements DataBalancingAlgorit
     }
 
     private DataDistributionChange runRebalancing(Model model) {
+        if (model.getNodeCount() <= 0) {
+            return new DataDistributionChange();
+        }
+
+        int dataItemCount = DataDistributionUtils.countAllDataItems(model.getDataDistribution());
+        int dataItemCountPerNode = dataItemCount / model.getNodeCount();
+
         Map<Node, List<DataItem>> createdItems = new HashMap<>();
         Map<Node, List<DataItem>> removedItems = new HashMap<>();
 
@@ -35,7 +42,7 @@ public final class UniformDataBalancingAlgorithm implements DataBalancingAlgorit
             Node oldNode = e.getKey();
             e.getValue().forEach(
                     (DataItem item) -> {
-                        Node newNode = NodeGen.getNth(item.getId() / model.getNodeCount());
+                        Node newNode = NodeGen.getNth(item.getId() / dataItemCountPerNode);
                         if (!oldNode.equals(newNode)) {
                             DataDistributionUtils.addToMap(oldNode, item, removedItems);
                             DataDistributionUtils.addToMap(newNode, item, createdItems);
