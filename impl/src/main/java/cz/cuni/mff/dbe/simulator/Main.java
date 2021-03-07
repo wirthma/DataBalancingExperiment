@@ -1,44 +1,41 @@
 package cz.cuni.mff.dbe.simulator;
 
-import cz.cuni.mff.dbe.algorithm.DataBalancingAlgorithm;
-import cz.cuni.mff.dbe.algorithm.DummyDataBalancingAlgorithm;
-import cz.cuni.mff.dbe.databal.DataBalancer;
-import cz.cuni.mff.dbe.datasimulator.DataSimulator;
-import cz.cuni.mff.dbe.datasimulator.RandomIncrementalDataSimulator;
-import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
-import cz.cuni.mff.dbe.loadsimulator.NoLoadSimulator;
-import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
-import cz.cuni.mff.dbe.nodecountsimulator.StableNodeCountSimulator;
-import cz.cuni.mff.dbe.util.metrics.CsvMetricsRecorder;
 import cz.cuni.mff.dbe.util.metrics.Metrics;
+import cz.cuni.mff.dbe.util.metrics.MetricsRecorder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-import java.io.File;
-
+@SpringBootApplication
+@Configuration
+@ComponentScan("cz.cuni.mff.dbe")
+@PropertySource("classpath:${algorithm}.properties")
+@PropertySource("classpath:${workload}.properties")
 public class Main {
     public static void main(String[] args) {
-        // collection of params
-        int initNodeCount = 2;
-        int iterationCount = 2;
-        DataBalancingAlgorithm dataBalancingAlgorithm = new DummyDataBalancingAlgorithm();
-        DataSimulator dataSimulator = new RandomIncrementalDataSimulator();
-        LoadSimulator loadSimulator = new NoLoadSimulator();
-        NodeCountSimulator nodeCountSimulator = new StableNodeCountSimulator(initNodeCount);
+        ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        Metrics.setMetricsRecorder(
-                new CsvMetricsRecorder(System.getProperty("user.dir") + File.separator + "metrics")
-        );
+        Metrics.setMetricsRecorder(context.getBean(MetricsRecorder.class));
 
-        Simulator simulator = new Simulator(
-                new DataBalancer(dataBalancingAlgorithm),
-                dataSimulator,
-                loadSimulator,
-                nodeCountSimulator
-        );
+        context.getBean(Main.class).simulate();
+    }
 
+    private void simulate() {
         simulator.simulateInit();
 
         for (int i = 0; i < iterationCount; ++i) {
             simulator.simulateIteration();
         }
     }
+
+    @Autowired
+    private Simulator simulator;
+
+    @Value("${iterationcount}")
+    private int iterationCount;
 }

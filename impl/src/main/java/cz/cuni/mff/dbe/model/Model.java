@@ -3,6 +3,7 @@ package cz.cuni.mff.dbe.model;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 
 /**
  * Captures the data and load distribution in the system, as a model for the data balancer.
@@ -15,8 +16,15 @@ public final class Model {
         return dataDistribution;
     }
 
-    public void updateDataDistribution(DataSimulator dataSimulator) {
-        DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(dataDistribution, nodeCount);
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateDataDistribution(DataSimulator dataSimulator, int iterationNumber) {
+        DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(
+                iterationNumber,
+                dataDistribution,
+                nodeCount
+        );
 
         dataDistribution.update(dataDistributionChange);
     }
@@ -32,8 +40,15 @@ public final class Model {
         return loadDistribution;
     }
 
-    public void updateLoadDistribution(LoadSimulator loadSimulator) {
-        LoadDistributionChange loadDistributionChange = loadSimulator.nextLoadDistribution(loadDistribution);
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateLoadDistribution(LoadSimulator loadSimulator, int iterationNumber) {
+        LoadDistributionChange loadDistributionChange = loadSimulator.nextLoadDistribution(
+                iterationNumber,
+                loadDistribution,
+                dataDistribution
+        );
 
         loadDistribution.update(loadDistributionChange);
     }
@@ -46,10 +61,11 @@ public final class Model {
         return nodeCount;
     }
 
-    public void updateNodeCount(NodeCountSimulator nodeCountSimulator) {
-        int newNodeCount = nodeCountSimulator.nextNodeCount(nodeCount);
-
-        nodeCount = newNodeCount;
+    /**
+     * @param iterationNumber Number of the current iteration.
+     */
+    public void updateNodeCount(int iterationNumber, NodeCountSimulator nodeCountSimulator) {
+        nodeCount = nodeCountSimulator.nextNodeCount(iterationNumber, nodeCount, dataDistribution);
     }
 
     public void updateNodeCount(int nodeCount) {

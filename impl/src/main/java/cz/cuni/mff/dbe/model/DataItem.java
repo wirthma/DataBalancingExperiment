@@ -4,8 +4,23 @@ package cz.cuni.mff.dbe.model;
  * Represents a data item stored in the system.
  */
 public final class DataItem {
-    public DataItem(int id) {
+    /**
+     * @param timestamp The time point when the data item was created.
+     */
+    public DataItem(int id, int timestamp) {
         this.id = id;
+        this.timestamp = timestamp;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Returns the time point when the data item was created.
+     */
+    public int getTimestamp() {
+        return timestamp;
     }
 
     @Override
@@ -24,4 +39,9 @@ public final class DataItem {
     }
 
     private final int id;
+
+    /**
+     * The time point when the data item was created.
+     */
+    private final int timestamp;
 }

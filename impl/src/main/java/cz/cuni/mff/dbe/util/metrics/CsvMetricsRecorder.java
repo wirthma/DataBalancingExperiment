@@ -1,6 +1,9 @@
 package cz.cuni.mff.dbe.util.metrics;
 
 import cz.cuni.mff.dbe.util.log.Log;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,13 +14,17 @@ import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 
 /**
- * Writes metrics record in a CSV formatted file named as the metric.
+ * {@link MetricsRecorder} that writes metrics record in a CSV formatted file named as the metric.
  */
+@Component
+@ConditionalOnProperty(name = "metricsrecorder", havingValue = "csv")
 public final class CsvMetricsRecorder implements MetricsRecorder {
     /**
      * @param workingDir Path to a directory where the metrics are being stored.
      */
-    public CsvMetricsRecorder(String workingDir) {
+    public CsvMetricsRecorder(
+            @Value("${metricsrecorder.csv.workingDir}") String workingDir
+    ) {
         this.workingDir = workingDir;
     }
 
@@ -41,7 +48,7 @@ public final class CsvMetricsRecorder implements MetricsRecorder {
                         StandardOpenOption.APPEND
                 )
         ) {
-            writer.write(timestamp + ":" + value + System.lineSeparator());
+            writer.write(timestamp + "," + value + System.lineSeparator());
         } catch (IOException e) {
             Log.getLogger().log(
                     Level.SEVERE,
