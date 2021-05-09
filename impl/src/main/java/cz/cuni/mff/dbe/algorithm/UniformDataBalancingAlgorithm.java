@@ -19,15 +19,15 @@ import java.util.Map;
 public final class UniformDataBalancingAlgorithm implements DataBalancingAlgorithm {
     @Override
     public DataDistributionChange runInit(Model model) {
-        return runRebalancing(model);
+        return rebalance(model);
     }
 
     @Override
     public DataDistributionChange runIteration(int iterationNumber, Model model) {
-        return runRebalancing(model);
+        return rebalance(model);
     }
 
-    private DataDistributionChange runRebalancing(Model model) {
+    private DataDistributionChange rebalance(Model model) {
         if (model.getNodeCount() <= 0) {
             return new DataDistributionChange();
         }

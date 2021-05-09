@@ -24,18 +24,18 @@ import java.util.Random;
 @ConditionalOnProperty(name = "databalancingalgorithm", havingValue = "random")
 public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorithm {
     /**
-     * @param rebalancingIterations Determines number of iterations after which all data are rebalanced in the periodic
+     * @param rebalancingIteration Determines number of iterations after which all data are rebalanced in the periodic
      *                              data rebalancing. Values less than 1 are overridden to 1.
      * @param seed The seed for the pseudo-random generator.
      */
     public RandomDataBalancingAlgorithm(
-            @Value("${databalancingalgorithm.random.rebalancingIterations}") int rebalancingIterations,
+            @Value("${databalancingalgorithm.random.rebalancingIteration}") int rebalancingIteration,
             @Value("${databalancingalgorithm.random.seed}") int seed
     ) {
-        if (rebalancingIterations > 1) {
-            this.rebalancingIterations = rebalancingIterations;
+        if (rebalancingIteration > 1) {
+            this.rebalancingIteration = rebalancingIteration;
         } else {
-            this.rebalancingIterations = 1;
+            this.rebalancingIteration = 1;
         }
 
         random = new Random(seed);
@@ -43,22 +43,22 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
 
     @Override
     public DataDistributionChange runInit(Model model) {
-        return doAlgorithmLogic(0, model);
+        return rebalanceIfRebalancingIteration(0, model);
     }
 
     @Override
     public DataDistributionChange runIteration(int iterationNumber, Model model) {
-        return doAlgorithmLogic(iterationNumber, model);
+        return rebalanceIfRebalancingIteration(iterationNumber, model);
     }
 
     /**
-     * Encapsulates the whole algorithm's logic.
+     * Runs {@link #rebalance(Model)} on every {@link #rebalancingIteration} iteration.
      *
      * @param iterationNumber Number of the current iteration.
      */
-    private DataDistributionChange doAlgorithmLogic(int iterationNumber, Model model) {
+    private DataDistributionChange rebalanceIfRebalancingIteration(int iterationNumber, Model model) {
         DataDistributionChange dataDistributionChange;
-        if (iterationNumber % rebalancingIterations == 0) {
+        if (iterationNumber % rebalancingIteration == 0) {
             dataDistributionChange = rebalance(model);
         } else {
             dataDistributionChange = new DataDistributionChange();
@@ -92,7 +92,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
     /**
      * Determines number of iterations after which all data are rebalanced in the periodic data rebalancing.
      */
-    private final int rebalancingIterations;
+    private final int rebalancingIteration;
 
     private final Random random;
 }
