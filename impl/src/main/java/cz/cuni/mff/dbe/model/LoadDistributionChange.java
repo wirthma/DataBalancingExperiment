@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines a change in load distribution on data items.
+ * Defines a change {@link LoadDistribution}.
  */
 public final class LoadDistributionChange {
     /**
@@ -15,21 +15,21 @@ public final class LoadDistributionChange {
     }
 
     /**
-     * @param changedLoad Load information to be set for given data items.
+     * @param changedLoad Load information to be (re)set for given data items.
      */
     public LoadDistributionChange(Map<DataItem, Integer> changedLoad) {
         this.changedLoad = changedLoad;
     }
 
     /**
-     * @return Load information to be set for given data items.
+     * @return Load information to be (re)set for given data items.
      */
     public Map<DataItem, Integer> getChangedLoad() {
         return changedLoad;
     }
 
     /**
-     * Load information to be set for given data items.
+     * Load information to be (re)set for given data items.
      */
     private final Map<DataItem, Integer> changedLoad;
 }

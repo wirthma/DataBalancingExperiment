@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Defines a change in data distribution on system nodes.
+ * Defines a change in {@link DataDistribution}.
  */
 public final class DataDistributionChange {
     /**
