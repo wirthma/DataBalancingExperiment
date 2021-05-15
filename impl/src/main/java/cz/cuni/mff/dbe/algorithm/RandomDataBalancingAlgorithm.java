@@ -5,7 +5,6 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.node.NodeGen;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -32,11 +31,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
             @Value("${databalancingalgorithm.random.rebalancingIteration}") int rebalancingIteration,
             @Value("${databalancingalgorithm.random.seed}") int seed
     ) {
-        if (rebalancingIteration > 1) {
-            this.rebalancingIteration = rebalancingIteration;
-        } else {
-            this.rebalancingIteration = 1;
-        }
+        this.rebalancingIteration = rebalancingIteration > 1 ? rebalancingIteration : 1;
 
         random = new Random(seed);
     }
@@ -81,7 +76,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
             DataDistributionUtils.addToMap(oldNode, items, removedItems);
 
             for (DataItem item : items) {
-                Node newNode = NodeGen.getNth(random.nextInt(model.getNodeCount()));
+                Node newNode = model.getNodes().getNth(random.nextInt(model.getNodes().size()));
                 DataDistributionUtils.addToMap(newNode, item, createdItems);
             }
         }

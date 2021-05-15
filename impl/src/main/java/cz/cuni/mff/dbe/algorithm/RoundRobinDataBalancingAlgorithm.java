@@ -2,7 +2,6 @@ package cz.cuni.mff.dbe.algorithm;
 
 import cz.cuni.mff.dbe.model.*;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.node.NodeGen;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ public final class RoundRobinDataBalancingAlgorithm implements DataBalancingAlgo
             Node oldNode = e.getKey();
             e.getValue().forEach(
                     (DataItem item) -> {
-                        Node newNode = NodeGen.getNth(item.getId() % model.getNodeCount());
+                        Node newNode = model.getNodes().getNth(item.getId() % model.getNodes().size());
                         if (!oldNode.equals(newNode)) {
                             DataDistributionUtils.addToMap(oldNode, item, removedItems);
                             DataDistributionUtils.addToMap(newNode, item, createdItems);

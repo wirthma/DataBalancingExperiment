@@ -5,7 +5,7 @@ import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.model.DataDistributionChange;
 import cz.cuni.mff.dbe.model.Model;
-import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import cz.cuni.mff.dbe.nodesetsimulator.NodeSetSimulator;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -66,12 +66,12 @@ public final class DataBalancer {
     }
 
     /**
-     * Updates the information about the node count in the model of the data balancer.
+     * Updates the information about the nodes in the model of the data balancer.
      *
      * @param iterationNumber Number of the current iteration.
      */
-    public void updateNodeCount(NodeCountSimulator nodeCountSimulator, int iterationNumber) {
-        model.updateNodeCount(iterationNumber, nodeCountSimulator);
+    public void updateNodeSet(NodeSetSimulator nodeSetSimulator, int iterationNumber) {
+        model.updateNodes(iterationNumber, nodeSetSimulator);
     }
 
     /**
