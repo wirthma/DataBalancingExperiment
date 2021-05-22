@@ -3,7 +3,7 @@ package cz.cuni.mff.dbe.simulator;
 import cz.cuni.mff.dbe.databal.DataBalancer;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
-import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
+import cz.cuni.mff.dbe.nodesetsimulator.NodeSetSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +20,11 @@ public final class Simulator {
     }
 
     /**
-     * Executes system node count changes, data distribution changes, data balancing changes and load distribution
+     * Executes system node set changes, data distribution changes, data balancing changes and load distribution
      * changes.
      */
     public void simulateIteration() {
-        dataBalancer.updateNodeCount(nodeCountSimulator, iterationNumber);
+        dataBalancer.updateNodeSet(nodeSetSimulator, iterationNumber);
         dataBalancer.updateDataDistribution(dataSimulator, iterationNumber);
         dataBalancer.simulateIteration(iterationNumber);
         dataBalancer.updateLoadDistribution(loadSimulator, iterationNumber);
@@ -42,7 +42,7 @@ public final class Simulator {
     private LoadSimulator loadSimulator;
 
     @Autowired
-    private NodeCountSimulator nodeCountSimulator;
+    private NodeSetSimulator nodeSetSimulator;
 
     /**
      * Number of the current iteration.

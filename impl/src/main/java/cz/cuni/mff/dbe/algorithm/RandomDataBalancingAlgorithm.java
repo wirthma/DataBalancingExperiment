@@ -5,7 +5,6 @@ import cz.cuni.mff.dbe.model.DataItem;
 import cz.cuni.mff.dbe.model.Model;
 import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.node.NodeGen;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -24,41 +23,37 @@ import java.util.Random;
 @ConditionalOnProperty(name = "databalancingalgorithm", havingValue = "random")
 public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorithm {
     /**
-     * @param rebalancingIterations Determines number of iterations after which all data are rebalanced in the periodic
+     * @param rebalancingIteration Determines number of iterations after which all data are rebalanced in the periodic
      *                              data rebalancing. Values less than 1 are overridden to 1.
      * @param seed The seed for the pseudo-random generator.
      */
     public RandomDataBalancingAlgorithm(
-            @Value("${databalancingalgorithm.random.rebalancingIterations}") int rebalancingIterations,
+            @Value("${databalancingalgorithm.random.rebalancingIteration}") int rebalancingIteration,
             @Value("${databalancingalgorithm.random.seed}") int seed
     ) {
-        if (rebalancingIterations > 1) {
-            this.rebalancingIterations = rebalancingIterations;
-        } else {
-            this.rebalancingIterations = 1;
-        }
+        this.rebalancingIteration = rebalancingIteration > 1 ? rebalancingIteration : 1;
 
         random = new Random(seed);
     }
 
     @Override
     public DataDistributionChange runInit(Model model) {
-        return doAlgorithmLogic(0, model);
+        return rebalanceIfRebalancingIteration(0, model);
     }
 
     @Override
     public DataDistributionChange runIteration(int iterationNumber, Model model) {
-        return doAlgorithmLogic(iterationNumber, model);
+        return rebalanceIfRebalancingIteration(iterationNumber, model);
     }
 
     /**
-     * Encapsulates the whole algorithm's logic.
+     * Runs {@link #rebalance(Model)} on every {@link #rebalancingIteration} iteration.
      *
      * @param iterationNumber Number of the current iteration.
      */
-    private DataDistributionChange doAlgorithmLogic(int iterationNumber, Model model) {
+    private DataDistributionChange rebalanceIfRebalancingIteration(int iterationNumber, Model model) {
         DataDistributionChange dataDistributionChange;
-        if (iterationNumber % rebalancingIterations == 0) {
+        if (iterationNumber % rebalancingIteration == 0) {
             dataDistributionChange = rebalance(model);
         } else {
             dataDistributionChange = new DataDistributionChange();
@@ -81,7 +76,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
             DataDistributionUtils.addToMap(oldNode, items, removedItems);
 
             for (DataItem item : items) {
-                Node newNode = NodeGen.getNth(random.nextInt(model.getNodeCount()));
+                Node newNode = model.getNodes().getNth(random.nextInt(model.getNodes().size()));
                 DataDistributionUtils.addToMap(newNode, item, createdItems);
             }
         }
@@ -92,7 +87,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
     /**
      * Determines number of iterations after which all data are rebalanced in the periodic data rebalancing.
      */
-    private final int rebalancingIterations;
+    private final int rebalancingIteration;
 
     private final Random random;
 }

@@ -2,7 +2,6 @@ package cz.cuni.mff.dbe.algorithm;
 
 import cz.cuni.mff.dbe.model.*;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.node.NodeGen;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -19,15 +18,15 @@ import java.util.Map;
 public final class RoundRobinDataBalancingAlgorithm implements DataBalancingAlgorithm {
     @Override
     public DataDistributionChange runInit(Model model) {
-        return runRebalancing(model);
+        return rebalance(model);
     }
 
     @Override
     public DataDistributionChange runIteration(int iterationNumber, Model model) {
-        return runRebalancing(model);
+        return rebalance(model);
     }
 
-    private DataDistributionChange runRebalancing(Model model) {
+    private DataDistributionChange rebalance(Model model) {
         Map<Node, List<DataItem>> createdItems = new HashMap<>();
         Map<Node, List<DataItem>> removedItems = new HashMap<>();
 
@@ -35,7 +34,7 @@ public final class RoundRobinDataBalancingAlgorithm implements DataBalancingAlgo
             Node oldNode = e.getKey();
             e.getValue().forEach(
                     (DataItem item) -> {
-                        Node newNode = NodeGen.getNth(item.getId() % model.getNodeCount());
+                        Node newNode = model.getNodes().getNth(item.getId() % model.getNodes().size());
                         if (!oldNode.equals(newNode)) {
                             DataDistributionUtils.addToMap(oldNode, item, removedItems);
                             DataDistributionUtils.addToMap(newNode, item, createdItems);

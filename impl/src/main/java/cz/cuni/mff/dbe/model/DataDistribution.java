@@ -1,7 +1,6 @@
 package cz.cuni.mff.dbe.model;
 
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
-import cz.cuni.mff.dbe.util.node.NodeGen;
 
 import java.util.*;
 
@@ -31,17 +30,15 @@ public final class DataDistribution {
     }
 
     /**
-     * Checks first given number of nodes in the data distribution and creates empty data mappings for them if
+     * Checks the given nodes in the data distribution and creates empty data mappings for them if
      * they do not have any.
      */
-    public void update(int nodeCount) {
-        for (int i = 0; i < nodeCount; ++i) {
-            Node node = NodeGen.getNth(i);
-
+    public void update(Collection<Node> nodes) {
+        nodes.forEach((Node node) -> {
             if (!nodeToDataMap.containsKey(node)) {
                 nodeToDataMap.put(node, new ArrayList<>());
             }
-        }
+        });
     }
 
     private final Map<Node, List<DataItem>> nodeToDataMap = new HashMap<>();

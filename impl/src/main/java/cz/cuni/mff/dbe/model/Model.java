@@ -2,8 +2,7 @@ package cz.cuni.mff.dbe.model;
 
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
-import cz.cuni.mff.dbe.nodecountsimulator.NodeCountSimulator;
-import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
+import cz.cuni.mff.dbe.nodesetsimulator.NodeSetSimulator;
 
 /**
  * Captures the data and load distribution in the system, as a model for the data balancer.
@@ -23,7 +22,7 @@ public final class Model {
         DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(
                 iterationNumber,
                 dataDistribution,
-                nodeCount
+                nodes
         );
 
         dataDistribution.update(dataDistributionChange);
@@ -57,22 +56,29 @@ public final class Model {
         loadDistribution.update(loadDistributionChange);
     }
 
-    public int getNodeCount() {
-        return nodeCount;
+    public NodeSet getNodes() {
+        return nodes;
     }
 
     /**
      * @param iterationNumber Number of the current iteration.
      */
-    public void updateNodeCount(int iterationNumber, NodeCountSimulator nodeCountSimulator) {
-        nodeCount = nodeCountSimulator.nextNodeCount(iterationNumber, nodeCount, dataDistribution);
+    public void updateNodes(int iterationNumber, NodeSetSimulator nodeSetSimulator) {
+        NodeSetChange nodeSetChange = nodeSetSimulator.nextNodeSet(iterationNumber, nodes, dataDistribution);
+
+        updateNodes(nodeSetChange);
     }
 
-    public void updateNodeCount(int nodeCount) {
-        this.nodeCount = nodeCount;
+    public void updateNodes(NodeSetChange nodeSetChange) {
+        for (Node node : nodeSetChange.getCreatedNodes()) {
+            nodes.add(node);
+        }
+        for (Node node : nodeSetChange.getRemovedNodes()) {
+            nodes.remove(node);
+        }
     }
 
-    private int nodeCount = 0;
+    private NodeSet nodes = new NodeSet();
 
     private final DataDistribution dataDistribution = new DataDistribution();
 

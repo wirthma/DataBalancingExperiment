@@ -17,27 +17,31 @@ function simulate {
 
 rm -rf results
 
-simulate    'algorithm/onenode'           'workload/favoriteitems5'     "FavoriteItems5-OneNode"
-simulate    'algorithm/random'            'workload/favoriteitems5'     "FavoriteItems5-Random"
-simulate    'algorithm/roundrobin'        'workload/favoriteitems5'     "FavoriteItems5-RoundRobin"
-simulate    'algorithm/uniform'           'workload/favoriteitems5'     "FavoriteItems5-Uniform"
+simulate    'algorithm/onenode'             'workload/favoriteitems5'     "FavoriteItems5-OneNode"
+simulate    'algorithm/random'              'workload/favoriteitems5'     "FavoriteItems5-Random"
+simulate    'algorithm/roundrobin'          'workload/favoriteitems5'     "FavoriteItems5-RoundRobin"
+simulate    'algorithm/uniform'             'workload/favoriteitems5'     "FavoriteItems5-Uniform"
+simulate    'algorithm/consistenthashing'   'workload/favoriteitems5'     "FavoriteItems5-ConsistentHashing"
 
-simulate    'algorithm/roundrobin'        'workload/favoriteitems7'     "FavoriteItems7-RoundRobin"
+simulate    'algorithm/roundrobin'          'workload/favoriteitems7'     "FavoriteItems7-RoundRobin"
 
-simulate   'algorithm/onenode'           'workload/lru'                 "Lru-OneNode"
-simulate   'algorithm/random'            'workload/lru'                 "Lru-Random"
-simulate   'algorithm/roundrobin'        'workload/lru'                 "Lru-RoundRobin"
-simulate   'algorithm/uniform'           'workload/lru'                 "Lru-Uniform"
+simulate    'algorithm/onenode'             'workload/lru'                "Lru-OneNode"
+simulate    'algorithm/random'              'workload/lru'                "Lru-Random"
+simulate    'algorithm/roundrobin'          'workload/lru'                "Lru-RoundRobin"
+simulate    'algorithm/uniform'             'workload/lru'                "Lru-Uniform"
+simulate    'algorithm/consistenthashing'   'workload/lru'                "Lru-ConsistentHashing"
 
-simulate    'algorithm/onenode'           'workload/uniform'            "Uniform-OneNode"
-simulate    'algorithm/random'            'workload/uniform'            "Uniform-Random"
-simulate    'algorithm/roundrobin'        'workload/uniform'            "Uniform-RoundRobin"
-simulate    'algorithm/uniform'           'workload/uniform'            "Uniform-Uniform"
+simulate    'algorithm/onenode'             'workload/uniform'            "Uniform-OneNode"
+simulate    'algorithm/random'              'workload/uniform'            "Uniform-Random"
+simulate    'algorithm/roundrobin'          'workload/uniform'            "Uniform-RoundRobin"
+simulate    'algorithm/uniform'             'workload/uniform'            "Uniform-Uniform"
+simulate    'algorithm/consistenthashing'   'workload/uniform'            "Uniform-ConsistentHashing"
 
-simulate    'algorithm/onenode'           'workload/uniformdist'        "UniformDist-OneNode"
-simulate    'algorithm/random'            'workload/uniformdist'        "UniformDist-Random"
-simulate    'algorithm/roundrobin'        'workload/uniformdist'        "UniformDist-RoundRobin"
-simulate    'algorithm/uniform'           'workload/uniformdist'        "UniformDist-Uniform"
+simulate    'algorithm/onenode'             'workload/uniformdist'        "UniformDist-OneNode"
+simulate    'algorithm/random'              'workload/uniformdist'        "UniformDist-Random"
+simulate    'algorithm/roundrobin'          'workload/uniformdist'        "UniformDist-RoundRobin"
+simulate    'algorithm/uniform'             'workload/uniformdist'        "UniformDist-Uniform"
+simulate    'algorithm/consistenthashing'   'workload/uniformdist'        "UniformDist-ConsistentHashing"
 
 cp -f results_processing/overview_generator/gen_md_overview.sh results
 cd results || exit
