@@ -104,9 +104,12 @@ public final class NodeSet {
         return nodes.isEmpty();
     }
 
-    public void update(NodeSetChange nodeSetChange) {
-        nodeSetChange.getRemovedNodes().forEach((Node node) -> nodes.remove(node.getId()));
-        nodeSetChange.getCreatedNodes().forEach((Node node) -> nodes.put(node.getId(), node));
+    public void add(Node node) {
+        nodes.put(node.getId(), node);
+    }
+
+    public void remove(Node node) {
+        nodes.remove(node.getId());
     }
 
     /**
