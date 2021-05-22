@@ -66,11 +66,16 @@ public final class Model {
     public void updateNodes(int iterationNumber, NodeSetSimulator nodeSetSimulator) {
         NodeSetChange nodeSetChange = nodeSetSimulator.nextNodeSet(iterationNumber, nodes, dataDistribution);
 
-        nodes.update(nodeSetChange);
+        updateNodes(nodeSetChange);
     }
 
     public void updateNodes(NodeSetChange nodeSetChange) {
-        nodes.update(nodeSetChange);
+        for (Node node : nodeSetChange.getCreatedNodes()) {
+            nodes.add(node);
+        }
+        for (Node node : nodeSetChange.getRemovedNodes()) {
+            nodes.remove(node);
+        }
     }
 
     private NodeSet nodes = new NodeSet();
