@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Provides generation of random objects.
  */
-public class Rand {
+public final class Rand {
     /**
      * Returns a random integer from the given interval (inclusive).
      */

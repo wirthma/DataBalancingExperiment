@@ -8,7 +8,7 @@ import java.util.*;
  * <p>
  * The given objects must have equals and hashCode properly implemented.
  */
-public class KeySetGen<O> {
+public final class KeySetGen<O> {
     /**
      * @param keySetSize Number of unique, random keys in each key-set.
      */

@@ -15,7 +15,7 @@ import java.util.*;
  */
 @Component
 @ConditionalOnProperty(name = "databalancingalgorithm", havingValue = "consistenthashing")
-public class ConsistentHashingDataBalancingAlgorithm implements DataBalancingAlgorithm {
+public final class ConsistentHashingDataBalancingAlgorithm implements DataBalancingAlgorithm {
     /**
      * @param seed The seed for the pseudo-random generator.
      */

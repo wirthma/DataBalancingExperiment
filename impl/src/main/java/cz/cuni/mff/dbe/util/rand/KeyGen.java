@@ -8,7 +8,7 @@ import java.util.Random;
  * <p>
  * The given objects must have equals and hashCode properly implemented.
  */
-public class KeyGen<O> {
+public final class KeyGen<O> {
     public KeyGen(Random random) {
         this.keySetGen = new KeySetGen<>(1, random);
     }
