@@ -1,7 +1,7 @@
 package cz.cuni.mff.dbe.simulator;
 
 import cz.cuni.mff.dbe.util.metrics.Metrics;
-import cz.cuni.mff.dbe.util.metrics.MetricsRecorder;
+import cz.cuni.mff.dbe.util.metrics.MetricsWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        Metrics.setMetricsRecorder(context.getBean(MetricsRecorder.class));
+        Metrics.setMetricsWriter(context.getBean(MetricsWriter.class));
 
         context.getBean(Main.class).simulate();
     }

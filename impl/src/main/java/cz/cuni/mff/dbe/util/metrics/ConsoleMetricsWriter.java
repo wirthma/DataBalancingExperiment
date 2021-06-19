@@ -4,13 +4,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * A {@link MetricsRecorder} that throws away any input.
+ * {@link MetricsWriter} that writes metrics record on the standard output.
  */
 @Component
-@ConditionalOnProperty(name = "metricsrecorder", havingValue = "no")
-public final class NoMetricsRecorder implements MetricsRecorder {
+@ConditionalOnProperty(name = "metricswriter", havingValue = "console")
+public final class ConsoleMetricsWriter implements MetricsWriter {
     @Override
     public void record(String metricName, Timestamp timestamp, int value) {
-        // empty / no action
+        System.out.println(metricName + " >>> " + timestamp + " : " + value);
     }
 }

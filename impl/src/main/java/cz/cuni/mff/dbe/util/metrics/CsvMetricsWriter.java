@@ -14,16 +14,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 
 /**
- * {@link MetricsRecorder} that writes metrics record in a CSV formatted file named as the metric.
+ * {@link MetricsWriter} that writes metrics record in a CSV formatted file named as the metric.
  */
 @Component
-@ConditionalOnProperty(name = "metricsrecorder", havingValue = "csv")
-public final class CsvMetricsRecorder implements MetricsRecorder {
+@ConditionalOnProperty(name = "metricswriter", havingValue = "csv")
+public final class CsvMetricsWriter implements MetricsWriter {
     /**
      * @param workingDir Path to a directory where the metrics are being stored.
      */
-    public CsvMetricsRecorder(
-            @Value("${metricsrecorder.csv.workingDir}") String workingDir
+    public CsvMetricsWriter(
+            @Value("${metricswriter.csv.workingDir}") String workingDir
     ) {
         this.workingDir = workingDir;
     }
