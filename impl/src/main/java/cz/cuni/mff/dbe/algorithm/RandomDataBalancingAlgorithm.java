@@ -76,7 +76,7 @@ public final class RandomDataBalancingAlgorithm implements DataBalancingAlgorith
             DataDistributionUtils.addToMap(oldNode, items, removedItems);
 
             for (DataItem item : items) {
-                Node newNode = model.getNodes().getNth(random.nextInt(model.getNodes().size()));
+                Node newNode = model.getNodeSet().getNth(random.nextInt(model.getNodeSet().size())).getValue();
                 DataDistributionUtils.addToMap(newNode, item, createdItems);
             }
         }

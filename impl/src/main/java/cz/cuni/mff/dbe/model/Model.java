@@ -3,6 +3,7 @@ package cz.cuni.mff.dbe.model;
 import cz.cuni.mff.dbe.datasimulator.DataSimulator;
 import cz.cuni.mff.dbe.loadsimulator.LoadSimulator;
 import cz.cuni.mff.dbe.nodesetsimulator.NodeSetSimulator;
+import cz.cuni.mff.dbe.util.ds.TokenRing;
 
 /**
  * Captures the data and load distribution in the system, as a model for the data balancer.
@@ -22,7 +23,7 @@ public final class Model {
         DataDistributionChange dataDistributionChange = dataSimulator.nextDataDistribution(
                 iterationNumber,
                 dataDistribution,
-                nodes
+                nodeSet
         );
 
         dataDistribution.update(dataDistributionChange);
@@ -56,29 +57,34 @@ public final class Model {
         loadDistribution.update(loadDistributionChange);
     }
 
-    public NodeSet getNodes() {
-        return nodes;
+    public TokenRing<Integer, Node> getNodeSet() {
+        return nodeSet;
     }
 
     /**
      * @param iterationNumber Number of the current iteration.
      */
-    public void updateNodes(int iterationNumber, NodeSetSimulator nodeSetSimulator) {
-        NodeSetChange nodeSetChange = nodeSetSimulator.nextNodeSet(iterationNumber, nodes, dataDistribution);
+    public void updateNodeSet(int iterationNumber, NodeSetSimulator nodeSetSimulator) {
+        NodeSetChange nodeSetChange = nodeSetSimulator.nextNodeSet(iterationNumber, nodeSet, dataDistribution);
 
-        updateNodes(nodeSetChange);
+        updateNodeSet(nodeSetChange);
     }
 
-    public void updateNodes(NodeSetChange nodeSetChange) {
+    public void updateNodeSet(NodeSetChange nodeSetChange) {
         for (Node node : nodeSetChange.getCreatedNodes()) {
-            nodes.add(node);
+            nodeSet.add(node.getId(), node);
         }
         for (Node node : nodeSetChange.getRemovedNodes()) {
-            nodes.remove(node);
+            nodeSet.remove(node.getId());
         }
     }
 
-    private NodeSet nodes = new NodeSet();
+    /**
+     * System nodes placed on a ring ordered by their ID.
+     * <p>
+     * This organization of nodes is advantageous for some of the data balancing algorithms.
+     */
+    private TokenRing<Integer, Node> nodeSet = new TokenRing<>();
 
     private final DataDistribution dataDistribution = new DataDistribution();
 

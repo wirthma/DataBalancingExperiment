@@ -71,7 +71,7 @@ public final class DataBalancer {
      * @param iterationNumber Number of the current iteration.
      */
     public void updateNodeSet(NodeSetSimulator nodeSetSimulator, int iterationNumber) {
-        model.updateNodes(iterationNumber, nodeSetSimulator);
+        model.updateNodeSet(iterationNumber, nodeSetSimulator);
     }
 
     /**

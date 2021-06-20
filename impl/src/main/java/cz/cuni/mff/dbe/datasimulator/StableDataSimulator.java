@@ -2,6 +2,7 @@ package cz.cuni.mff.dbe.datasimulator;
 
 import cz.cuni.mff.dbe.model.*;
 import cz.cuni.mff.dbe.util.data.DataItemGen;
+import cz.cuni.mff.dbe.util.ds.TokenRing;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -28,9 +29,9 @@ public final class StableDataSimulator implements DataSimulator {
     public DataDistributionChange nextDataDistribution(
             int iterationNumber,
             DataDistribution dataDistribution,
-            NodeSet nodes
+            TokenRing<Integer, Node> nodeSet
     ) {
-        if (nodes.isEmpty()) {
+        if (nodeSet.isEmpty()) {
             return new DataDistributionChange();
         }
 
@@ -38,7 +39,7 @@ public final class StableDataSimulator implements DataSimulator {
             areDataItemsAdded = true;
 
             Map<Node, List<DataItem>> createdItems = new HashMap<>();
-            createdItems.put(nodes.getLeast(), DataItemGen.generateList(dataItemCount));
+            createdItems.put(nodeSet.getLeast().getValue(), DataItemGen.generateList(dataItemCount));
             return new DataDistributionChange(createdItems, new HashMap<>());
         } else {
             return new DataDistributionChange();

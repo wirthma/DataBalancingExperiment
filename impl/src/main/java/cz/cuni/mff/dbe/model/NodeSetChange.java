@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Defines change in {@link NodeSet}.
+ * Defines change in the set of system nodes.
  */
 public final class NodeSetChange {
     /**

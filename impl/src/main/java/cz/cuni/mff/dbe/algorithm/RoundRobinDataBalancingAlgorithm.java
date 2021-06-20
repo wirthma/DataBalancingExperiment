@@ -34,7 +34,9 @@ public final class RoundRobinDataBalancingAlgorithm implements DataBalancingAlgo
             Node oldNode = e.getKey();
             e.getValue().forEach(
                     (DataItem item) -> {
-                        Node newNode = model.getNodes().getNth(item.getId() % model.getNodes().size());
+                        Node newNode = model.getNodeSet().getNth(
+                            item.getId() % model.getNodeSet().size()
+                        ).getValue();
                         if (!oldNode.equals(newNode)) {
                             DataDistributionUtils.addToMap(oldNode, item, removedItems);
                             DataDistributionUtils.addToMap(newNode, item, createdItems);

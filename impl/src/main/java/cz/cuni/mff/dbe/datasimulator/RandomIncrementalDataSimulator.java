@@ -2,6 +2,7 @@ package cz.cuni.mff.dbe.datasimulator;
 
 import cz.cuni.mff.dbe.model.*;
 import cz.cuni.mff.dbe.util.data.DataItemGen;
+import cz.cuni.mff.dbe.util.ds.TokenRing;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -30,14 +31,17 @@ public final class RandomIncrementalDataSimulator implements DataSimulator {
     public DataDistributionChange nextDataDistribution(
             int iterationNumber,
             DataDistribution dataDistribution,
-            NodeSet nodes
+            TokenRing<Integer, Node> nodeSet
     ) {
-        if (nodes.isEmpty()) {
+        if (nodeSet.isEmpty()) {
             return new DataDistributionChange();
         }
 
         Map<Node, List<DataItem>> createdDataItems = new HashMap<>();
-        createdDataItems.put(nodes.getNth(random.nextInt(nodes.size())), DataItemGen.generateList(1));
+        createdDataItems.put(
+            nodeSet.getNth(random.nextInt(nodeSet.size())).getValue(),
+            DataItemGen.generateList(1)
+        );
         return new DataDistributionChange(createdDataItems, new HashMap<>());
     }
 

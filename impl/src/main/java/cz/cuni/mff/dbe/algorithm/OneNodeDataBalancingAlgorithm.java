@@ -32,7 +32,7 @@ public final class OneNodeDataBalancingAlgorithm implements DataBalancingAlgorit
         Map<Node, List<DataItem>> createdItems = new HashMap<>();
         Map<Node, List<DataItem>> removedItems = new HashMap<>();
 
-        Node leastNode = model.getNodes().getLeast();
+        Node leastNode = model.getNodeSet().getLeast().getValue();
 
         for (Map.Entry<Node, List<DataItem>> nodeItems : model.getDataDistribution().getNodeToDataMap().entrySet()) {
             Node node = nodeItems.getKey();

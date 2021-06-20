@@ -2,6 +2,7 @@ package cz.cuni.mff.dbe.algorithm;
 
 import cz.cuni.mff.dbe.model.*;
 import cz.cuni.mff.dbe.util.data.DataDistributionUtils;
+import cz.cuni.mff.dbe.util.ds.TokenRing;
 import cz.cuni.mff.dbe.util.rand.KeyGen;
 import cz.cuni.mff.dbe.util.rand.KeySetGen;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +43,8 @@ public final class ConsistentHashingDataBalancingAlgorithm implements DataBalanc
         Map<Node, List<DataItem>> createdItems = new HashMap<>();
         Map<Node, List<DataItem>> removedItems = new HashMap<>();
 
-        NodeSet tokenRing = constructTokenRing(model); // we repeat this each iteration to get an up-to-date token ring
+        // we repeat this each iteration to get an up-to-date token ring
+        TokenRing<Integer, Node> tokenRing = constructTokenRing(model);
 
         for (Map.Entry<Node, List<DataItem>> nodeItems : model.getDataDistribution().getNodeToDataMap().entrySet()) {
             Node originalNode = nodeItems.getKey();
@@ -51,7 +53,7 @@ public final class ConsistentHashingDataBalancingAlgorithm implements DataBalanc
             for (DataItem item : items) {
                 // mapping: item -> key -> next token on ring -> token's corresponding node
                 int itemKey = dataItemKeyGen.getKey(item);
-                Node token = tokenRing.getNextOnRing(itemKey);
+                Node token = tokenRing.getNextOnRing(itemKey).getValue();
                 Node belongsToNode = tokensGen.getObject(token.getId());
 
                 if (!originalNode.equals(belongsToNode)) {
@@ -67,13 +69,13 @@ public final class ConsistentHashingDataBalancingAlgorithm implements DataBalanc
     /**
      * Constructs a convenient data structure storing tokens of all system nodes and providing ring-interval queries.
      */
-    private NodeSet constructTokenRing(Model model) {
-        NodeSet tokenRing = new NodeSet();
+    private TokenRing<Integer, Node> constructTokenRing(Model model) {
+        TokenRing<Integer, Node> tokenRing = new TokenRing<>();
 
-        model.getNodes().getAll().stream().flatMap(
-            (Node node) -> tokensGen.getKeySet(node).stream()
+        model.getNodeSet().getAll().stream().flatMap(
+            (Map.Entry<Integer, Node> nodeMapping) -> tokensGen.getKeySet(nodeMapping.getValue()).stream()
         ).forEach(
-            (Integer token) -> tokenRing.add(new Node(token))
+            (Integer token) -> tokenRing.add(token, new Node(token))
         );
 
         return tokenRing;

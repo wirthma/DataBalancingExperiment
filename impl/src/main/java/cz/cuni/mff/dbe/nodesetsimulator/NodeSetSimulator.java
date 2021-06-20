@@ -1,8 +1,9 @@
 package cz.cuni.mff.dbe.nodesetsimulator;
 
 import cz.cuni.mff.dbe.model.DataDistribution;
-import cz.cuni.mff.dbe.model.NodeSet;
+import cz.cuni.mff.dbe.model.Node;
 import cz.cuni.mff.dbe.model.NodeSetChange;
+import cz.cuni.mff.dbe.util.ds.TokenRing;
 
 /**
  * Simulates node set changes in a distributed system.
@@ -10,8 +11,8 @@ import cz.cuni.mff.dbe.model.NodeSetChange;
 public interface NodeSetSimulator {
     /**
      * @param iterationNumber Number of the current iteration.
-     * @param nodeSet The current nodes.
+     * @param nodeSet The current set of nodes.
      * @param dataDistribution The current data distribution.
      */
-    NodeSetChange nextNodeSet(int iterationNumber, NodeSet nodeSet, DataDistribution dataDistribution);
+    NodeSetChange nextNodeSet(int iterationNumber, TokenRing<Integer, Node> nodeSet, DataDistribution dataDistribution);
 }
