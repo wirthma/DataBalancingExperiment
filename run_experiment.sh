@@ -22,6 +22,7 @@ simulate    'algorithm/random'              'workload/favoriteitems5'     "Favor
 simulate    'algorithm/roundrobin'          'workload/favoriteitems5'     "FavoriteItems5-RoundRobin"
 simulate    'algorithm/uniform'             'workload/favoriteitems5'     "FavoriteItems5-Uniform"
 simulate    'algorithm/consistenthashing'   'workload/favoriteitems5'     "FavoriteItems5-ConsistentHashing"
+simulate    'algorithm/slicer'              'workload/favoriteitems5'     "FavoriteItems5-Slicer"
 
 simulate    'algorithm/roundrobin'          'workload/favoriteitems7'     "FavoriteItems7-RoundRobin"
 
@@ -30,18 +31,21 @@ simulate    'algorithm/random'              'workload/lru'                "Lru-R
 simulate    'algorithm/roundrobin'          'workload/lru'                "Lru-RoundRobin"
 simulate    'algorithm/uniform'             'workload/lru'                "Lru-Uniform"
 simulate    'algorithm/consistenthashing'   'workload/lru'                "Lru-ConsistentHashing"
+simulate    'algorithm/slicer'              'workload/lru'                "Lru-Slicer"
 
 simulate    'algorithm/onenode'             'workload/uniform'            "Uniform-OneNode"
 simulate    'algorithm/random'              'workload/uniform'            "Uniform-Random"
 simulate    'algorithm/roundrobin'          'workload/uniform'            "Uniform-RoundRobin"
 simulate    'algorithm/uniform'             'workload/uniform'            "Uniform-Uniform"
 simulate    'algorithm/consistenthashing'   'workload/uniform'            "Uniform-ConsistentHashing"
+simulate    'algorithm/slicer'              'workload/uniform'            "Uniform-Slicer"
 
 simulate    'algorithm/onenode'             'workload/uniformdist'        "UniformDist-OneNode"
 simulate    'algorithm/random'              'workload/uniformdist'        "UniformDist-Random"
 simulate    'algorithm/roundrobin'          'workload/uniformdist'        "UniformDist-RoundRobin"
 simulate    'algorithm/uniform'             'workload/uniformdist'        "UniformDist-Uniform"
 simulate    'algorithm/consistenthashing'   'workload/uniformdist'        "UniformDist-ConsistentHashing"
+simulate    'algorithm/slicer'              'workload/uniformdist'        "UniformDist-Slicer"
 
 cp -f results_processing/overview_generator/gen_md_overview.sh results
 cd results || exit
